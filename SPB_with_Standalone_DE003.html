@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+​
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <style>
+  div#navigation {width: 350px; 
+  </style>
+  <!-- Add the PayPal JavaScript SDK with buttons and funding-eligibility. -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&components=buttons,funding-eligibility&intent=capture&merchant-id=V6S4NHV9N7FX4&buyer-country=DE"></script>
+</head>
+​
+<body>
+<p style = "font-family:helvetica;">
+PayPal Smart Payment Buttons: Standalone Smart Payment Buttons <br><br>
+​
+Configuration<br>
+German Merchant - MerchantID<br>
+German Buyer Country<br>
+German locale<br>
+</p>
+​
+
+​
+<div id="navigation">
+​
+<ul style = "font-family:helvetica;">
+  <li>
+    <input type="radio" name="payment-option" value="pp" checked>
+    <label for="pp">PayPal</label>
+    <div id="paypal-button"></div>
+  </li>
+  <li>
+    <input type="radio" name="payment-option" value="ccg">
+    <label for="ccg">Credit Card</label>
+    <div id="credit-card-guest-button"></div>
+  </li>
+  <li>
+    <input type="radio" name="payment-option" value="sepa">
+    <label for="sepa">SEPA Lastschrift</label>
+    <div id="sepa-button"></div>
+  </li>
+  <li>
+    <input type="radio" name="payment-option" value="giro">
+    <label for="giro">Giropay</label>
+    <div id="giro-button"></div>
+  </li>
+  <li>
+    <input type="radio" name="payment-option" value="sofort">
+    <label for="sofort">Sofort-Überweisung</label>
+    <div id="sofort-button"></div>
+  </li>
+</ul>
+</div>
+​
+​
+<div id="paypal-button-container"></div>
+​
+<script>
+
+
+ if(paypal.isFundingEligible(paypal.FUNDING.PAYPAL)) {
+   paypal.Buttons({
+     fundingSource: paypal.FUNDING.PAYPAL
+   }).render('#paypal-button');
+ }
+
+ if(paypal.isFundingEligible(paypal.FUNDING.CARD)) {
+   paypal.Buttons({
+     fundingSource: paypal.FUNDING.CARD
+   }).render('#credit-card-guest-button');
+ }
+ 
+ if(paypal.isFundingEligible(paypal.FUNDING.SEPA)) {
+   paypal.Buttons({
+     fundingSource: paypal.FUNDING.SEPA
+   }).render('#sepa-button');
+ }
+ 
+ if(paypal.isFundingEligible(paypal.FUNDING.GIROPAY)) {
+   paypal.Buttons({
+     fundingSource: paypal.FUNDING.GIROPAY
+   }).render('#giro-button');
+ }
+ 
+  if(paypal.isFundingEligible(paypal.FUNDING.SOFORT)) {
+   paypal.Buttons({
+     fundingSource: paypal.FUNDING.SOFORT
+   }).render('#sofort-button');
+ }
+
+
+
+ // Listen for changes to the radio buttons
+  document.querySelectorAll('input[name=payment-option]')
+    .forEach(function (el) {
+      el.addEventListener('change', function (event) {
+
+        // If PayPal is selected, show the PayPal button
+        if (event.target.value === 'pp') {
+          document.body.querySelector('#credit-card-guest-button')
+            .style.display = 'none';
+          document.body.querySelector('#paypal-button')
+            .style.display = 'block';
+			document.body.querySelector('#sepa-button')
+            .style.display = 'none';
+			document.body.querySelector('#giro-button')
+            .style.display = 'none';
+			document.body.querySelector('#sofort-button')
+            .style.display = 'none';
+        }
+
+        // If alternate funding is selected, show a different button
+        if (event.target.value === 'ccg') {
+          document.body.querySelector('#credit-card-guest-button')
+            .style.display = 'block';
+          document.body.querySelector('#paypal-button')
+            .style.display = 'none';
+			document.body.querySelector('#sepa-button')
+            .style.display = 'none';
+			document.body.querySelector('#giro-button')
+            .style.display = 'none';
+			document.body.querySelector('#sofort-button')
+            .style.display = 'none';
+        }
+		
+		// If alternate funding is selected, show a different button
+        if (event.target.value === 'sepa') {
+          document.body.querySelector('#credit-card-guest-button')
+            .style.display = 'none';
+          document.body.querySelector('#paypal-button')
+            .style.display = 'none';
+			document.body.querySelector('#sepa-button')
+            .style.display = 'block';
+			document.body.querySelector('#giro-button')
+            .style.display = 'none';
+			document.body.querySelector('#sofort-button')
+            .style.display = 'none';
+        }
+		
+		 if (event.target.value === 'giro') {
+          document.body.querySelector('#credit-card-guest-button')
+            .style.display = 'none';
+          document.body.querySelector('#paypal-button')
+            .style.display = 'none';
+			document.body.querySelector('#sepa-button')
+            .style.display = 'none';
+			document.body.querySelector('#giro-button')
+            .style.display = 'block';
+			document.body.querySelector('#sofort-button')
+            .style.display = 'none';
+        }
+		
+		if (event.target.value === 'sofort') {
+          document.body.querySelector('#credit-card-guest-button')
+            .style.display = 'none';
+          document.body.querySelector('#paypal-button')
+            .style.display = 'none';
+			document.body.querySelector('#sepa-button')
+            .style.display = 'none';
+			document.body.querySelector('#giro-button')
+            .style.display = 'none';
+			document.body.querySelector('#sofort-button')
+            .style.display = 'block';
+        }
+        // console.log(event.target.value);
+      });
+    });
+
+  // Hide non-PayPal button by default
+  document.body.querySelector('#credit-card-guest-button')
+    .style.display = 'none';
+	document.body.querySelector('#sepa-button')
+    .style.display = 'none';
+	document.body.querySelector('#giro-button')
+    .style.display = 'none';
+	document.body.querySelector('#sofort-button')
+    .style.display = 'none';
+ // var FUNDING_SOURCES = [
+ //     paypal.FUNDING.PAYPAL,
+ //     paypal.FUNDING.VENMO,
+ //     paypal.FUNDING.CREDIT
+ // ];
+ //
+ // // Loop over each funding source / payment method
+ // FUNDING_SOURCES.forEach(function(fundingSource) {
+ //   // Check if the funding source is eligible
+ //   if (paypal.isFundingEligible(fundingSource)) {
+ //       // Render the standalone button for that funding source
+ //       paypal.Buttons({
+ //           fundingSource: fundingSource
+ //       }).render('#paypal-button-container');
+ //     }
+ //  });
+</script>
+
+</body>
